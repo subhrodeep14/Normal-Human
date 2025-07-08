@@ -9,8 +9,7 @@ export const POST = async (req: Request) => {
     const lastName=data.last_name;
     const image=data.profile_image_url;
 
-    // Here you would typically save the user to your database
-    // For example, using Prisma:   
+    // Here you would typically save the user to your database   
     await db.user.create({
         data: {
             id: data.id,

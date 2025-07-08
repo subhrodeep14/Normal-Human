@@ -26,5 +26,5 @@ model User {
     updatedAt DateTime @updatedAt
     image     String?
     firstName String
-    lastName  String
+    lastName  String?
 }
