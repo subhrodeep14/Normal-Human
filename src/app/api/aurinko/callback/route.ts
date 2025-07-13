@@ -34,21 +34,20 @@ export const GET = async (req: NextRequest) => {
             where:{
                 id: token.accountId.toString()
             },
-            create: {
-            
-                emailAddress: accountDetails.email,
-                id: token.accountId.toString(),
-                userId,
-                token: token.accessToken,
-                provider: 'Aurinko',
-                accessToken: token.accessToken,
-                name: accountDetails.name
-            },
-            update: {
+             update: {
                 
                 accessToken: token.accessToken,
             
+            },
+            create: {
+                emailAddress: accountDetails.email,
+                id: token.accountId.toString(),
+                userId,
+                
+                accessToken: token.accessToken,
+                name: accountDetails.name
             }
+           
         })
 
         waitUntil( axios.post(`${process.env.NEXT_PUBLIC_URL}/api/initial-sync`, {

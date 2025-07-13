@@ -25,8 +25,19 @@ export const POST = async (req: NextRequest) => {
 
    if (!response) return NextResponse.json({ error: "INITIAL_SYNC_FAILED" }, { status: 500 });
    const { emails, deltaToken } = response;
+    console.log('email', emails);
+    
+//    await db.account.update({
+//     where:{
+//         id: accountId,
+//     },
+//     data:{
+//         nextDeltaToken: deltaToken,
+//     }
+//    })
+//    await syncEmailsToDatabase
+//    (response.emails, accountId);
+   console.log('sync completed', deltaToken);
 
-   await syncEmailsToDatabase(response.emails, accountId);
-
-   return NextResponse.json({ success: true });
+   return NextResponse.json({ success: true }, { status: 200 });
 }
