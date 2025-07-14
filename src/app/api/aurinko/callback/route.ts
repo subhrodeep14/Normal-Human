@@ -5,6 +5,7 @@ import axios from "axios";
 import { NextResponse ,NextRequest} from "next/server";
 import { waitUntil } from "@vercel/functions";
 
+
 export const GET = async (req: NextRequest) => {
     const {userId} = await auth();
     console.log('User ID:', userId);
@@ -20,44 +21,44 @@ export const GET = async (req: NextRequest) => {
         return NextResponse.json({ error: 'Authorization code not found' }, { status: 400 });
     }
 
-        const token=await exchangeCodeForAccessToken(code);
+        const token=await exchangeCodeForAccessToken(code as string);
         if(!token) {
             return NextResponse.json({ error: 'Failed to exchange code for access token' }, { status: 500 });
         }
+        console.log('Token received:', token);
 
         const accountDetails = await getAccountDetails(token.accessToken);
         if (!accountDetails) {
             return NextResponse.json({ error: 'Failed to fetch account details' }, { status: 500 });
         }
-
-        await db.account.upsert({
-            where:{
-                id: token.accountId.toString()
-            },
-             update: {
-                
-                accessToken: token.accessToken,
+            console.log('Account details:', accountDetails);
             
-            },
-            create: {
-                emailAddress: accountDetails.email,
-                id: token.accountId.toString(),
-                userId,
+        // await db.account.upsert({
+        //     where:{
+        //         id: token.accountId.toString()
+        //     },
+        //      update: {
+        //         accessToken: token.accessToken,
+        //     },
+        //     create: {
+        //         emailAddress: accountDetails.email,
+        //         id: token.accountId.toString(),
+        //         userId,
                 
-                accessToken: token.accessToken,
-                name: accountDetails.name
-            }
+        //         accessToken: token.accessToken,
+        //         name: accountDetails.name
+        //     }
            
-        })
+        // })
 
-        waitUntil( axios.post(`${process.env.NEXT_PUBLIC_URL}/api/initial-sync`, {
-            accountId: token.accountId.toString(),
-            userId
-        }).then((res) => {
-            console.log('Initial sync started:', res.data);
-        }).catch((error) => {
-            console.error('Error starting initial sync:', error.response?.data || error.message);
-        }));
+        // waitUntil( axios.post(`${process.env.NEXT_PUBLIC_URL}/api/initial-sync`, {
+        //     accountId: token.accountId.toString(),
+        //     userId
+        // }).then((res) => {
+        //     console.log('Initial sync started:', res.data);
+        // }).catch((error) => {
+        //     console.error('Error starting initial sync:', error.response?.data || error.message);
+        // }));
 
     return NextResponse.redirect(new URL('/mail', req.url));
 }

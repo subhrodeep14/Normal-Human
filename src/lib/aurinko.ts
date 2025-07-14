@@ -32,13 +32,13 @@ export const exchangeCodeForAccessToken =async (code: string) => {
         })
         return response.data as{
             accessToken: string;
-            accountId: string;
+            accountId: number;
             userId:string;
             userSession: string;
         };
     }catch (error) {
         if(axios.isAxiosError(error)) {
-            console.error('Error exchanging code for access token:', error.response?.data || error.message);
+            console.error('Error exchanging code for access token:', error.response?.data);
         throw new Error('Failed to exchange code for access token');
     }
 }
@@ -58,7 +58,7 @@ export const getAccountDetails = async (accessToken: string) => {
         };
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            console.error('Error fetching account details:', error.response?.data || error.message);
+            console.error('Error fetching account details:', error.response?.data );
             throw new Error('Failed to fetch account details');
         }
     }
