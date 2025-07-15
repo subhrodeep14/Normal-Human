@@ -55,6 +55,10 @@ export const getAccountDetails = async (accessToken: string) => {
            
             email: string;
             name: string;
+            
+
+            id: string;
+
         };
     } catch (error) {
         if (axios.isAxiosError(error)) {

@@ -27,17 +27,17 @@ export const POST = async (req: NextRequest) => {
    const { emails, deltaToken } = response;
     console.log('email', emails);
     
-//    await db.account.update({
-//     where:{
-//         id: accountId,
-//     },
-//     data:{
-//         nextDeltaToken: deltaToken,
+//     await db.account.update({
+//         where: {
+//             id: accountId,
+//         },
+//         data: {
+//             nextDeltaToken: deltaToken,
 //     }
 //    })
 //    await syncEmailsToDatabase
 //    (response.emails, accountId);
-   console.log('sync completed', deltaToken);
+//    console.log('sync completed', deltaToken);
 
    return NextResponse.json({ success: true }, { status: 200 });
 }

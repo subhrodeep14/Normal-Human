@@ -29,15 +29,13 @@ model Account {
     emailAddress    String
     accessToken     String   @unique
     name            String
-    
-
-
-    nextDeltaToken String?
-
-    user           User           @relation(fields: [userId], references: [id])
-   
+    user            User     @relation(fields: [userId], references: [id])
    
 }
+
+
+
+
 
 
 
